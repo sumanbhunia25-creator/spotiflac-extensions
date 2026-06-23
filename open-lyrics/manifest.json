@@ -2,13 +2,17 @@
   "name": "open-lyrics",
   "displayName": "Open Lyrics (LRCLIB)",
   "version": "1.0.0",
-  "description": "Fetches synced (LRC) and plain lyrics from LRCLIB — a free, open-source, crowd-sourced lyrics database. No API key required.",
+  "description": "Fetches synced and plain lyrics from LRCLIB",
   "author": "SpotiFLAC Extensions",
   "permissions": {
     "network": ["lrclib.net"],
     "storage": true
   },
-  "type": ["lyrics_provider"],
+  "type": [
+    "lyrics_provider",
+    "metadata_provider",
+    "download_provider"
+  ],
   "settings": [
     {
       "key": "preferSynced",
