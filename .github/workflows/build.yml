@@ -2,24 +2,38 @@ name: Build & Package Extensions
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
       - name: Build open-lyrics
         run: |
-          mkdir -p open-lyrics/dist
-          cp open-lyrics/src/index.js open-lyrics/dist/index.js
-          cp open-lyrics/manifest.json open-lyrics/dist/manifest.json
-          cd open-lyrics/dist
-          zip -j open-lyrics.spotiflac-ext manifest.json index.js
+          cd open-lyrics
+          npm install
+          npm run build
+          cd ..
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Package extension
+        run: |
+          mkdir -p dist
+          cp open-lyrics/dist/open-lyrics.spotiflac-ext dist/ 2>/dev/null || \
+          zip -j dist/open-lyrics.spotiflac-ext open-lyrics/dist/*
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: open-lyrics
-          path: open-lyrics/dist/open-lyrics.spotiflac-ext
+          tag_name: v1.0.0
+          files: dist/open-lyrics.spotiflac-ext
+          token: ${{ secrets.GITHUB_TOKEN }}
