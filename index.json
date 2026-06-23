@@ -2,10 +2,11 @@
   "extensions": [
     {
       "id": "open-lyrics",
-      "name": "Open Lyrics",
-      "description": "Fetches and embeds lyrics into downloaded tracks",
+      "name": "Open Lyrics (LRCLIB)",
+      "description": "Fetches synced and plain lyrics from LRCLIB for downloaded tracks",
       "version": "1.0.0",
-      "download": "https://github.com/sumanbhunia25-creator/spotiflac-extensions/releases/latest/download/open-lyrics.spotiflac-ext"
+      "download_url": "https://github.com/sumanbhunia25-creator/spotiflac-extensions/releases/latest/download/open-lyrics.spotiflac-ext",
+      "icon_url": ""
     }
   ]
 }
