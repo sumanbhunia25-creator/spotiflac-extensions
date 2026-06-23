@@ -27,9 +27,18 @@ jobs:
 
       - name: Package extension
         run: |
+          cd open-lyrics/dist
+          zip -j open-lyrics.spotiflac-ext manifest.json index.js
+          cd ../..
           mkdir -p dist
-          cp open-lyrics/dist/open-lyrics.spotiflac-ext dist/ 2>/dev/null || \
-          zip -j dist/open-lyrics.spotiflac-ext open-lyrics/dist/*
+          cp open-lyrics/dist/open-lyrics.spotiflac-ext dist/
+
+      - name: Delete old release
+        run: |
+          gh release delete v1.0.0 --yes || true
+          git push origin :refs/tags/v1.0.0 || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
