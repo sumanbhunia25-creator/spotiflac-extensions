@@ -3,8 +3,6 @@ name: Build & Package Extensions
 on:
   push:
     branches: [main]
-  release:
-    types: [published]
 
 jobs:
   build:
@@ -12,27 +10,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Build all extensions
+      - name: Build open-lyrics
         run: |
-          for dir in odesli-enricher open-lyrics free-music-search soundcloud-provider; do
-            if [ -d "$dir" ]; then
-              cd $dir
-              npm install
-              npm run build
-              npm run package
-              cd ..
-            else
-              echo "Skipping $dir — folder not found"
-            fi
-          done
+          mkdir -p open-lyrics/dist
+          cp open-lyrics/src/index.js open-lyrics/dist/index.js
+          cp open-lyrics/manifest.json open-lyrics/dist/manifest.json
+          cd open-lyrics/dist
+          zip -j open-lyrics.spotiflac-ext manifest.json index.js
 
-      - name: Upload artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: spotiflac-extensions
-          path: "**/*.spotiflac-ext"
+          name: open-lyrics
+          path: open-lyrics/dist/open-lyrics.spotiflac-ext
