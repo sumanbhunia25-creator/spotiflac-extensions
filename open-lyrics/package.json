@@ -1,0 +1,9 @@
+{
+  "name": "open-lyrics",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cp src/index.js dist/index.js && cp manifest.json dist/manifest.json",
+    "package": "mkdir -p dist && cd dist && zip -j open-lyrics.spotiflac-ext manifest.json index.js"
+  }
+}
